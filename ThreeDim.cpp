@@ -39,8 +39,8 @@ vector<vector<vector<int>>> rank3TensorMult(vector<vector<vector<int>>> A, vecto
 }
 
 int main(){
-	auto A = vector<vector<vector<int>>>{ { {1,2} , {3,4} } , { {5,6} , {7,8} } };
-	auto B = vector<vector<vector<int>>>{ { {9,10} , {11,12} } , { {13,14} , {15,16} } };
+	auto A = vector<vector<vector<int>>>{ { {1,1} , {1,1} } , { {1,1} , {1,1} } };
+	auto B = vector<vector<vector<int>>>{ { {2,2} , {2,2} } , { {2,2} , {2,2} } };
 	//cout << "Created" << endl;
 	auto C = rank3TensorMult(A,B);
 	//cout << "Finished" << endl;
