@@ -166,12 +166,21 @@ int main(){
     const int n1 = 10;
 
     auto A1 = Generate2DArray<int, n1>();//auto A = Generate2DVector();
+
     auto B1 = Generate2DArray<int, n1>();//auto B = Generate2DVector();
+    if(A1.size() != n1 ||  B1.size() != n1) {
+        cout<<"Array not created correctly";
+        return 0;
+    }
     auto C1 = rank2TensorAdd<int, n1>(A1, B1);
     auto C2 = rank2TensorMult<int, n1>(A1,B1);
 
     ofstream output;
     output.open("Results.txt");
+    if(!output.is_open()){
+        cout<<"File did not open correctly, exiting program.";
+        return 0;
+    }
 
     output<<"First 2D matrix used: "<<endl;
     Save2D(A1, output);
@@ -189,6 +198,10 @@ int main(){
 
     auto A2 = Generate3DArray<int, n2>();
     auto B2 = Generate3DArray<int, n2>();
+    if(A2.size() != n2 ||  B2.size() != n2) {
+        cout<<"Array not created correctly";
+        return 0;
+    }
     auto C3 = rank3TensorAdd<int, n2>(A2, B2);
     auto C4 = rank3TensorMult<int, n2>(A2, B2);
 
