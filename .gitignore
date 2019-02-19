@@ -34,7 +34,7 @@
 # CodeLite IDE
 *.mk
 *.project
-*.txt
+# *.txt
 .codelite/
 *.workspace
 Makefile
@@ -44,3 +44,11 @@ Makefile
 
 ### VS Code ###
 .vscode/
+
+### LaTeX ###
+*.aux
+*.bbl
+*.blg
+*.log
+*.synctex.gz
+*.bib
