@@ -3,6 +3,7 @@
 #include <array>
 #include <ctime>
 #include <random>
+#include <chrono>
 
 using namespace std;
 
@@ -98,7 +99,7 @@ array<array<array<T, n>, n>, n> rank3TensorMult(array<array<array<T, n>, n>, n> 
 template<class T, long long unsigned int n>
 array<array<array<T, n>, n>, n> Generate3DArray(){
     auto A = array<array<array<T, n>, n>, n> ();
-    default_random_engine generator(time(0));
+    default_random_engine generator(chrono::high_resolution_clock::now().time_since_epoch().count());//default_random_engine generator(time(0));
     uniform_int_distribution<int> distribution(0,n);
     distribution(generator);
     for (auto i = 0; i < n ; i++){
@@ -114,14 +115,17 @@ array<array<array<T, n>, n>, n> Generate3DArray(){
 template<class T, long long unsigned int n>
 array<array<T, n>, n> Generate2DVector(){
     auto A = array<array<T, n>, n> ();
-    default_random_engine generator(time(0));
-    uniform_int_distribution<int> distribution(0,n);
+    default_random_engine generator(chrono::high_resolution_clock::now().time_since_epoch().count());//default_random_engine generator(time(0));
+    uniform_int_distribution<int> distribution(0,n-1);
     distribution(generator);
     for (auto i = 0; i < n ; i++){
         for(auto j = 0; j < n ; j++){
             A.at(i).at(j) = distribution(generator);
+            cout << A.at(i).at(j) << " ";
         }
+        cout << endl;
     }
+    cout << endl;
     return A;
 }
 
@@ -129,8 +133,8 @@ int main(){
     default_random_engine generator(time(0));
     const int n = 10;
 
-    auto A = Generate2DVector();
-    auto B = Generate2DVector();
+    auto A = Generate2DVector<int, n>();//auto A = Generate2DVector();
+    auto B = Generate2DVector<int, n>();//auto B = Generate2DVector();
     
 /*    uniform_int_distribution<int> distribution(0,n-1);
     distribution(generator);
