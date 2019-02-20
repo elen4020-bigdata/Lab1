@@ -52,3 +52,6 @@ Makefile
 *.log
 *.synctex.gz
 *.bib
+
+### Allow Specific EXE ###
+!lab1complete.exe
