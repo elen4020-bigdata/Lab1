@@ -8,34 +8,33 @@
 
 using namespace std;
 
+class DimensionsHaveToBeNonZeroPositiveIntegersException{};
+
 template<class T, long long unsigned int n>
 array<array<T, n>, n> rank2TensorAdd(const array<array<T, n>, n> A, const array<array<T, n>, n> B){
-   
+    if(n <= 0){
+        throw DimensionsHaveToBeNonZeroPositiveIntegersException{};
+    }
     auto C = array<array<T, n>, n>();
-
     auto startTime = clock();
-
-//    #pragma omp parallel for
     for (auto i = 0; i < n ; i++){
         for (auto j = 0; j < n; j++){
             auto sum = A.at(i).at(j) + B.at(i).at(j);
             C.at(i).at(j) = sum;
         }
     }
-
     auto runTime = clock() - startTime;
-    cout << "2D addition ran in: " << double(runTime)/(double)CLOCKS_PER_SEC << " seconds" << endl;
+    cout << "2D addition ran in: " << double(runTime)/(double)CLOCKS_PER_SEC << " seconds." << endl;
     return C;
 }
 
 template<class T, long long unsigned int n>
 array<array<array<T, n>, n>, n> rank3TensorAdd(const array<array<array<T, n>, n>, n> A, const array<array<array<T, n>, n>, n> B){
-   
+    if(n <= 0){
+        throw DimensionsHaveToBeNonZeroPositiveIntegersException{};
+    }
     auto C = array<array<array<T, n>, n>, n>();
-
     auto startTime = clock();
-
-//    #pragma omp parallel for
     for (auto i = 0; i < n ; i++){
         for (auto j = 0; j < n; j++){
             for(auto k = 0; k < n; k++){
@@ -44,15 +43,17 @@ array<array<array<T, n>, n>, n> rank3TensorAdd(const array<array<array<T, n>, n>
             }
         }
     }
-
     auto runTime = clock() - startTime;
-    cout << "3D addition ran in: " << double(runTime)/(double)CLOCKS_PER_SEC << " seconds" << endl;
+    cout << "3D addition ran in: " << double(runTime)/(double)CLOCKS_PER_SEC << " seconds." << endl;
     return C;
 }
 
 
 template<class T, long long unsigned int n>
 array<array<T, n>, n> rank2TensorMult(array<array<T, n>, n> A, array<array<T, n>, n> B){ 
+    if(n <= 0){
+        throw DimensionsHaveToBeNonZeroPositiveIntegersException{};
+    }
 	auto startTime = clock();
     auto C = A;
 	for(int i = 0; i < A.at(1).size(); i++){
@@ -65,7 +66,7 @@ array<array<T, n>, n> rank2TensorMult(array<array<T, n>, n> A, array<array<T, n>
 		}	
 	}
     auto runTime = clock() - startTime;
-    cout << "2D multiplication ran in: " << double(runTime)/(double)CLOCKS_PER_SEC << " seconds" << endl;
+    cout << "2D multiplication ran in: " << double(runTime)/(double)CLOCKS_PER_SEC << " seconds." << endl;
 	return C;
 }
 
@@ -80,6 +81,9 @@ int vectorMult(vector<int> A, vector<int> B){
 
 template<class T, long long unsigned int n>
 array<array<array<T, n>, n>, n> rank3TensorMult(array<array<array<T, n>, n>, n> A, array<array<array<T, n>, n>, n> B){
+    if(n <= 0){
+        throw DimensionsHaveToBeNonZeroPositiveIntegersException{};
+    }
 	auto startTime = clock();
     auto C = A;
 	for(int x = 0; x < A.at(0).size(); x++){
@@ -98,12 +102,15 @@ array<array<array<T, n>, n>, n> rank3TensorMult(array<array<array<T, n>, n>, n> 
 		}
 	}
     auto runTime = clock() - startTime;
-    cout << "3D multiplication ran in: " << double(runTime)/(double)CLOCKS_PER_SEC << " seconds" << endl;
+    cout << "3D multiplication ran in: " << double(runTime)/(double)CLOCKS_PER_SEC << " seconds." << endl;
 	return C;
 }
 
 template<class T, long long unsigned int n>
 array<array<array<T, n>, n>, n> Generate3DArray(){
+    if(n <= 0){
+        throw DimensionsHaveToBeNonZeroPositiveIntegersException{};
+    }
     auto A = array<array<array<T, n>, n>, n> ();
     default_random_engine generator(chrono::high_resolution_clock::now().time_since_epoch().count());
     uniform_int_distribution<int> distribution(0,n-1);
@@ -120,6 +127,9 @@ array<array<array<T, n>, n>, n> Generate3DArray(){
 
 template<class T, long long unsigned int n>
 array<array<T, n>, n> Generate2DArray(){
+    if(n <= 0){
+        throw DimensionsHaveToBeNonZeroPositiveIntegersException{};
+    }
     auto A = array<array<T, n>, n> ();
     default_random_engine generator(chrono::high_resolution_clock::now().time_since_epoch().count());
     uniform_int_distribution<int> distribution(0,n-1);
@@ -132,9 +142,16 @@ array<array<T, n>, n> Generate2DArray(){
     return A;
 }
 
+class FileNotOpenException{};
+
 template<class T, long long unsigned int n>
 void Save2D(array<array<T, n>, n> Result, ofstream& output){
-
+    if(n <= 0){
+        throw DimensionsHaveToBeNonZeroPositiveIntegersException{};
+    }
+    if(!output.is_open()){
+        throw FileNotOpenException{};
+    }
     for (int i = 0; i<n; i++){
         for (int j = 0; j<n; j++){
             output<<Result.at(i).at(j)<<" ";
@@ -142,12 +159,17 @@ void Save2D(array<array<T, n>, n> Result, ofstream& output){
         }
         output<<endl;
     }
-    
     output<<endl<<endl;
 }
 
 template<class T, long long unsigned int n>
 void Save3D(array<array<array<T, n>, n>, n> Result, ofstream& output){
+    if(n <= 0){
+        throw DimensionsHaveToBeNonZeroPositiveIntegersException{};
+    }
+    if(!output.is_open()){
+        throw FileNotOpenException{};
+    }
     output<<"Front face of cube: "<<endl;
     for(int k = 0; k<n; k++){
         for (int i = 0; i<n; i++){
@@ -186,11 +208,7 @@ int main(){
 
     ofstream output;
     output.open("Results.txt");
-    if(!output.is_open()){
-        cout<<"File did not open correctly, exiting program.";
-        return 0;
-    }
-
+    
     output<<"First 2D matrix used: "<<endl;
     Save2D<int, n1>(Afor2DSmall, output);
 
