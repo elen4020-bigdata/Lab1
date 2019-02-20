@@ -1,0 +1,10 @@
+\section{Matrix Addition}
+Matrix addition is completed element wise. To calculate an element in matrix C, the corresponding elements in both matrix A and matrix B are added. Two dimentional and three dimentional addition are accomplished in the same manner.
+\begin{equation}
+	c_{ij} = a_{ij}+b_{ij}
+\end{equation}
+\begin{equation}
+	c_{ijk} = a_{ijk}+b_{ijk}
+\end{equation}
+This was accomplished by using nested \verb|for| loops. While this method is inefficient, it is simple and is easily parallelisable.
+
