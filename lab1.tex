@@ -32,12 +32,75 @@ It was assumed matrix $A$ and $B$ are cubes.
 \section{Pseudocode}
 
 \begin{algorithm}[H]
+	\SetAlgoLined
+	\SetKwData{Left}{left}\SetKwData{This}{this}\SetKwData{Up}{up}
+	\SetKwFunction{Union}{Union}\SetKwFunction{FindCompress}{FindCompress}
+	\SetKwInOut{Input}{input}\SetKwInOut{Output}{output}
+	\Input{Two 2D square matrices}
+	\Output{Calculating the addition of two 2D square matrices}
+	initialise results matrix\; 
+	\For{Each row of the matrix}{
+		\For{Each column element in the current row}{
+			Sum the corresponding row and column elements of\\
+			both matrices\;
+			Store sum value in result matrix\;
+		}
+	}
+
+	Return results matrix\;
+\caption{2D Addition Algorithm}
+\end{algorithm}
+
+\begin{algorithm}[H]
+	\SetAlgoLined
+	\SetKwData{Left}{left}\SetKwData{This}{this}\SetKwData{Up}{up}
+	\SetKwFunction{Union}{Union}\SetKwFunction{FindCompress}{FindCompress}
+	\SetKwInOut{Input}{input}\SetKwInOut{Output}{output}
+	\Input{Two 3D cubic matrices}
+	\Output{Calculating the addition of two 3D cubic matrices}
+	initialise results matrix\;
+	\For{Each depth row of the cube}{
+		\For{Each row of the cube at the current depth}{
+			\For{Each column element at the current depth and row}{
+				Sum the corresponding row and column elements of\\ 
+				both matrices at the current depth\;
+				Store sum value in result matrix\;
+			}
+		}
+	}
+	Return results matrix\;
+	\caption{3D Addition Algorithm}
+\end{algorithm}
+
+
+\begin{algorithm}[H]
+	\SetAlgoLined
+	\SetKwData{Left}{left}\SetKwData{This}{this}\SetKwData{Up}{up}
+	\SetKwFunction{Union}{Union}\SetKwFunction{FindCompress}{FindCompress}
+	\SetKwInOut{Input}{input}\SetKwInOut{Output}{output}
+	\Input{Two 2D square matricesB}
+	\Output{Calculating the multiplication of two 2D square matrices}
+	initialise results matrix\;
+	\For{Each row of the square}{
+		\For{Each column of the square at the current row}{
+			\For{Each element in the row and column of the corresponding matrices}{
+				Mutiply and sum the corresponding row and column elements\;
+			}
+			Store sum value in result matrix\;
+		}
+	}
+	Return results matrix\;
+	\caption{2D Multiplication Algorithm}
+	
+\end{algorithm}
+
+\begin{algorithm}[H]
 \SetAlgoLined
 \SetKwData{Left}{left}\SetKwData{This}{this}\SetKwData{Up}{up}
 \SetKwFunction{Union}{Union}\SetKwFunction{FindCompress}{FindCompress}
 \SetKwInOut{Input}{input}\SetKwInOut{Output}{output}
-\Input{Matrix A and B}
-\Output{Matrix C }
+\Input{Matrix A and B, two 3D cubic matrices}
+\Output{Matrix C, the multiple of two 3D matrices}
 \BlankLine
 \For{each row in matrix C}{
 \For{each column in matrix C}{\label{forins}
@@ -46,7 +109,7 @@ Get corresponding row at depth from matrix A\;
 Get corresponding column at depth from matrix B\;
 Multiply the obtained row and column to get the value of matrix C at the current row, column and depth.
 }}}
-\caption{rank3TensorMult pseudocode}\label{algo_disjdecomp}
+\caption{3D Multiplication Algorithm}\label{algo_disjdecomp}
 
 \end{algorithm}
 
