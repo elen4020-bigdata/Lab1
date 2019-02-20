@@ -88,10 +88,10 @@ array<array<array<T, n>, n>, n> rank3TensorMult(array<array<array<T, n>, n>, n> 
 				vector<int> row = vector<int>();
 				vector<int> col = vector<int>();	
 				for(int i = 0; i < A.at(0).size(); i++){
-					row.push_back(A.at(i).at(y).at(k));//row.at(i) = A.at(i).at(y).at(k);
+					row.push_back(A.at(i).at(y).at(k));
 				}
 				for(int j = 0;j < A.at(0).size();j++){
-					col.push_back(B.at(x).at(j).at(k));//col.at(j) = B.at(x).at(j).at(k);
+					col.push_back(B.at(x).at(j).at(k));
 				}
 				C.at(x).at(y).at(k) = vectorMult(row,col);
 			}
@@ -105,8 +105,8 @@ array<array<array<T, n>, n>, n> rank3TensorMult(array<array<array<T, n>, n>, n> 
 template<class T, long long unsigned int n>
 array<array<array<T, n>, n>, n> Generate3DArray(){
     auto A = array<array<array<T, n>, n>, n> ();
-    default_random_engine generator(chrono::high_resolution_clock::now().time_since_epoch().count());//default_random_engine generator(time(0));
-    uniform_int_distribution<int> distribution(0,n);
+    default_random_engine generator(chrono::high_resolution_clock::now().time_since_epoch().count());
+    uniform_int_distribution<int> distribution(0,n-1);
     distribution(generator);
     for (auto i = 0; i < n ; i++){
         for(auto j = 0; j < n ; j++){
@@ -121,7 +121,7 @@ array<array<array<T, n>, n>, n> Generate3DArray(){
 template<class T, long long unsigned int n>
 array<array<T, n>, n> Generate2DArray(){
     auto A = array<array<T, n>, n> ();
-    default_random_engine generator(chrono::high_resolution_clock::now().time_since_epoch().count());//default_random_engine generator(time(0));
+    default_random_engine generator(chrono::high_resolution_clock::now().time_since_epoch().count());
     uniform_int_distribution<int> distribution(0,n-1);
     distribution(generator);
     for (auto i = 0; i < n ; i++){
@@ -163,17 +163,26 @@ void Save3D(array<array<array<T, n>, n>, n> Result, ofstream& output){
 
 int main(){
     default_random_engine generator(time(0));
-    const int n1 = 10;
+    const long long unsigned int n1 = 10;
 
-    auto A1 = Generate2DArray<int, n1>();//auto A = Generate2DVector();
-
-    auto B1 = Generate2DArray<int, n1>();//auto B = Generate2DVector();
-    if(A1.size() != n1 ||  B1.size() != n1) {
+    auto Afor2DSmall = Generate2DArray<int, n1>();
+    auto Bfor2DSmall = Generate2DArray<int, n1>();
+    if(Afor2DSmall.size() != n1 ||  Bfor2DSmall.size() != n1) {
         cout<<"Array not created correctly";
         return 0;
     }
-    auto C1 = rank2TensorAdd<int, n1>(A1, B1);
-    auto C2 = rank2TensorMult<int, n1>(A1,B1);
+    auto Cfor2DAddSmall = rank2TensorAdd<int, n1>(Afor2DSmall, Bfor2DSmall);
+    auto Cfor2DMultSmall = rank2TensorMult<int, n1>(Afor2DSmall,Bfor2DSmall);
+
+
+    auto Afor3DSmall = Generate3DArray<int, n1>();
+    auto Bfor3DSmall = Generate3DArray<int, n1>();
+    if(Afor3DSmall.size() != n1 ||  Bfor3DSmall.size() != n1) {
+        cout<<"Array not created correctly";
+        return 0;
+    }
+    auto Cfor3DAddSmall = rank3TensorAdd<int, n1>(Afor3DSmall, Bfor3DSmall);
+    auto Cfor3DMultSmall = rank3TensorMult<int, n1>(Afor3DSmall, Bfor3DSmall);
 
     ofstream output;
     output.open("Results.txt");
@@ -183,39 +192,72 @@ int main(){
     }
 
     output<<"First 2D matrix used: "<<endl;
-    Save2D(A1, output);
+    Save2D<int, n1>(Afor2DSmall, output);
 
     output<<"Second 2D matrix used: "<<endl;
-    Save2D(B1, output);
+    Save2D<int, n1>(Bfor2DSmall, output);
 
     output<<"2D Addition Result: "<<endl;
-    Save2D(C1, output);
+    Save2D<int, n1>(Cfor2DAddSmall, output);
 
     output<<"2D Multiplication Result: "<<endl;
-    Save2D(C2, output);
+    Save2D<int, n1>(Cfor2DMultSmall, output);
 
-    const auto n2 = 20;
+    output<<"First 3D matrix used: "<<endl;
+    Save3D<int, n1>(Afor3DSmall, output);
 
-    auto A2 = Generate3DArray<int, n2>();
-    auto B2 = Generate3DArray<int, n2>();
-    if(A2.size() != n2 ||  B2.size() != n2) {
+    output<<"Second 3D matrix used: "<<endl;
+    Save3D<int, n1>(Bfor3DSmall, output);
+
+    output<<"3D Addition Result: "<<endl;
+    Save3D<int, n1>(Cfor3DAddSmall, output);
+
+    output<<"3D Multiplication Result: "<<endl;
+    Save3D<int, n1>(Cfor3DMultSmall, output);
+
+    const long long unsigned int n2 = 20;
+
+    auto Afor2DLarge = Generate2DArray<int, n2>();
+    auto Bfor2DLarge = Generate2DArray<int, n2>();
+    if(Afor2DLarge.size() != n2 ||  Bfor2DLarge.size() != n2) {
         cout<<"Array not created correctly";
         return 0;
     }
-    auto C3 = rank3TensorAdd<int, n2>(A2, B2);
-    auto C4 = rank3TensorMult<int, n2>(A2, B2);
+    auto Cfor2DAddLarge = rank2TensorAdd<int, n2>(Afor2DLarge, Bfor2DLarge);
+    auto Cfor2DMultLarge = rank2TensorMult<int, n2>(Afor2DLarge,Bfor2DLarge);
+
+    auto Afor3DLarge = Generate3DArray<int, n2>();
+    auto Bfor3DLarge = Generate3DArray<int, n2>();
+    if(Afor3DLarge.size() != n2 ||  Bfor3DLarge.size() != n2) {
+        cout<<"Array not created correctly";
+        return 0;
+    }
+    auto Cfor3DAddLarge = rank3TensorAdd<int, n2>(Afor3DLarge, Bfor3DLarge);
+    auto Cfor3DMultLarge = rank3TensorMult<int, n2>(Afor3DLarge, Bfor3DLarge);
+
+    output<<"First 2D matrix used: "<<endl;
+    Save2D<int, n2>(Afor2DLarge, output);
+
+    output<<"Second 2D matrix used: "<<endl;
+    Save2D<int, n2>(Bfor2DLarge, output);
+
+    output<<"2D Addition Result: "<<endl;
+    Save2D<int, n2>(Cfor2DAddLarge, output);
+
+    output<<"2D Multiplication Result: "<<endl;
+    Save2D<int, n2>(Cfor2DMultLarge, output);
 
     output<<"First 3D matrix used: "<<endl;
-    Save3D(A2, output);
+    Save3D<int, n2>(Afor3DLarge, output);
 
     output<<"Second 3D matrix used: "<<endl;
-    Save3D(B2, output);
+    Save3D<int, n2>(Bfor3DLarge, output);
 
     output<<"3D Addition Result: "<<endl;
-    Save3D(C3, output);
+    Save3D<int, n2>(Cfor3DAddLarge, output);
 
     output<<"3D Multiplication Result: "<<endl;
-    Save3D(C4, output);
+    Save3D<int, n2>(Cfor3DMultLarge, output);
 
     output.close();
     return 0;
