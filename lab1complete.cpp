@@ -113,7 +113,7 @@ array<array<array<T, n>, n>, n> Generate3DArray(){
     }
     auto A = array<array<array<T, n>, n>, n> ();
     default_random_engine generator(chrono::high_resolution_clock::now().time_since_epoch().count());
-    uniform_int_distribution<int> distribution(0,n-1);
+    uniform_int_distribution<int> distribution(0,20);
     distribution(generator);
     for (auto i = 0; i < n ; i++){
         for(auto j = 0; j < n ; j++){
@@ -132,7 +132,7 @@ array<array<T, n>, n> Generate2DArray(){
     }
     auto A = array<array<T, n>, n> ();
     default_random_engine generator(chrono::high_resolution_clock::now().time_since_epoch().count());
-    uniform_int_distribution<int> distribution(0,n-1);
+    uniform_int_distribution<int> distribution(0,20);
     distribution(generator);
     for (auto i = 0; i < n ; i++){
         for(auto j = 0; j < n ; j++){
