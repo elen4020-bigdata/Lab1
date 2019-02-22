@@ -9,8 +9,8 @@
 
 \section{3-D Array Multiplication}
 
-To obtain each element in matrix $C$, matrix $A$ and $B$ are divided into two dimensional matrices, $A'$ and $B'$ as can be seen in figure \ref{3DMult}.
-For each two dimensional matrix, a single row and column is multiplied to get the corresonding element in the $C$ matrix.
+To obtain each element in matrix $C$, matrix $A$ and $B$ are divided into two-dimensional matrices, $A'$ and $B'$ as can be seen in figure \ref{3DMult}.
+For each two-dimensional matrix, a single row and column is multiplied to get the corresponding element in the $C$ matrix.
 This leads to a single value which is the element in the $C$ matrix.
 This is done for all elements in the $C$ matrix.
 
@@ -28,6 +28,15 @@ The resulting value is the corresponding element of $C$.
 
 This was repeated for all elements in matrix $C$.
 It was assumed matrix $A$ and $B$ are cubes.
+
+\section{Generalizing for $N$ dimensions}
+
+To multiply a multi-dimensional array of $N$ dimensions, a recursive function can be used.
+
+This can be done by inputting the two $N$ dimensional arrays and the value $N$.
+For the two, multi-dimensional arrays, extract a single plane and call the function on these $N-1$ multi-dimensional arrays.
+This process is continued until a single vector remains from each matrix.
+The vector product of these two vectors is the result of the corresponding element in the resultant $N$ multi-dimensional array.
 
 \section{Pseudocode}
 
